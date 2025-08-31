@@ -56,21 +56,15 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: transparent;              /* no visible division at top */
-    backdrop-filter: none;                /* no blur at top */
-    box-shadow: none;                     /* remove shadow / division */
+    /* semi-transparent so backdrop-filter can blur content behind the navbar */
+    background: rgba(13, 17, 23, 0.35);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
     border-bottom: none;
+    box-shadow: none;
     z-index: 1000;
-    transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* state when user has scrolled past the navbar */
-.navbar.scrolled {
-    background: rgba(13, 17, 23, 0.78);   /* subtle translucent background */
-    backdrop-filter: blur(8px);           /* blur effect when scrolled */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-}
 
 /* make sure navbar content still centers nicely */
 .nav-container {
@@ -79,7 +73,7 @@ body {
     padding: 12px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start; /* use flex-start so nav-menu's margin-left:auto pushes it right */
     height: auto;
 }
 
@@ -100,6 +94,7 @@ body {
     display: block;
     transition: var(--transition);
     object-fit: contain;
+    transform: translate(-150px, -8px); /* nudge logo upward and slightly left */
 }
 
 /* ensure image inside header logo doesn't stretch */
@@ -147,6 +142,7 @@ body {
     list-style: none;
     gap: 2rem;
     align-items: center;
+    transform: translate(650px, 0); /* nudge nav links right to balance logo shift */
 }
 
 .nav-link {
@@ -197,7 +193,9 @@ body {
 
 /* Hero Section */
 .hero {
-    min-height: 100vh;
+    margin-top: 0;                        /* remove any top margin */
+    padding-top: 80px;                    /* offset for fixed navbar */
+    min-height: 100vh;                    /* full viewport height */
     display: flex;
     align-items: center;
     background: var(--terminal-bg);
@@ -216,7 +214,7 @@ body {
         radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(125, 211, 252, 0.05) 0%, transparent 50%);
-    opacity: 0.6;
+    opacity: 0; /* disable decorative overlay so hero matches unified background */
 }
 
 .hero-container {
@@ -388,20 +386,11 @@ body {
 /* Featured Event Section */
 .featured-event-section {
     padding: 6rem 0;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+    background: var(--terminal-bg);
     position: relative;
-    box-shadow: inset 0 20px 40px rgba(14, 165, 233, 0.02);
 }
 
-.featured-event-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-skyblue), transparent);
-}
+/* decorative line removed to keep unified background */
 
 .featured-event-card {
     background: var(--terminal-bg);
@@ -608,8 +597,7 @@ body {
 /* Events Section */
 .events-section {
     padding: 6rem 0;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.02) 0%, rgba(59, 130, 246, 0.02) 100%);
-    box-shadow: inset 0 20px 40px rgba(14, 165, 233, 0.01);
+    background: var(--terminal-bg);
 }
 
 .events-grid {
@@ -803,8 +791,7 @@ body {
 /* Contact Section */
 .contact-section {
     padding: 6rem 0;
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
-    box-shadow: inset 0 20px 40px rgba(14, 165, 233, 0.02);
+    background: var(--terminal-bg);
 }
 
 .contact-grid {
@@ -1081,6 +1068,7 @@ body {
     .logo {
         height: 64px;
         max-height: 64px;
+    transform: translate(-6px, -4px); /* smaller left + upward nudge on mobile */
     }
 
     /* scale footer logo down independently to match header on small screens */
@@ -1705,5 +1693,32 @@ html {
     
     .tech-item span {
         font-size: 0.8rem;
+    }
+}
+
+/* Final navbar and footer cleanup: use unified background, no blur/borders */
+.navbar {
+    background: var(--terminal-bg);
+    border-bottom: none;
+    box-shadow: none;
+    z-index: 1000;
+}
+
+.footer {
+    background: var(--terminal-bg);
+}
+
+/* For dark mode (if implemented) */
+@media (prefers-color-scheme: dark) {
+    .navbar {
+        background: rgba(13, 17, 23, 0.35);
+        backdrop-filter: blur(8px) saturate(140%);
+        -webkit-backdrop-filter: blur(8px) saturate(140%);
+        border-bottom: none;
+    }
+
+    .footer {
+        background: rgba(17, 25, 40, 0.75);
+        border-top: none;
     }
 }

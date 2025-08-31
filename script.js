@@ -219,34 +219,10 @@ function initializeCountdownTimer() {
 
 // Scroll effects
 function initializeScrollEffects() {
-    // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(13, 17, 23, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-        } else {
-            navbar.style.background = 'rgba(13, 17, 23, 0.95)';
-            navbar.style.boxShadow = 'none';
-        }
-    });
+    // Intentionally left blank: navbar visual state is controlled by CSS only.
 }
 
-// Toggle navbar blur/background when user scrolls past top
-document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
-
-    const threshold = 20; // px - adjust as needed (or use navbar.offsetHeight)
-
-    const handleScroll = () => {
-        if (window.scrollY > threshold) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-});
+// Navbar scroll listeners removed — keep navbar visuals in CSS only.
 
 // Utility functions
 function validateEmail(email) {
