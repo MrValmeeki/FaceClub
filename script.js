@@ -232,6 +232,22 @@ function initializeScrollEffects() {
     });
 }
 
+// Toggle navbar blur/background when user scrolls past top
+document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    const threshold = 20; // px - adjust as needed (or use navbar.offsetHeight)
+
+    const handleScroll = () => {
+        if (window.scrollY > threshold) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+});
+
 // Utility functions
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

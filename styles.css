@@ -56,36 +56,82 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(20px);
+    background: transparent;              /* no visible division at top */
+    backdrop-filter: none;                /* no blur at top */
+    box-shadow: none;                     /* remove shadow / division */
+    border-bottom: none;
     z-index: 1000;
-    transition: var(--transition);
+    transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
 }
 
+/* state when user has scrolled past the navbar */
+.navbar.scrolled {
+    background: rgba(13, 17, 23, 0.78);   /* subtle translucent background */
+    backdrop-filter: blur(8px);           /* blur effect when scrolled */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+/* make sure navbar content still centers nicely */
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 12px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: auto;
 }
 
+/* Header brand wrapper */
 .nav-brand {
     display: flex;
     align-items: center;
     gap: 12px;
-}
-
-.logo {
-    height: 40px;
     width: auto;
-    transition: var(--transition);
+    height: auto;
 }
 
-.logo:hover {
-    transform: scale(1.05);
+/* Header logo — explicit, independent sizing */
+.logo {
+    height: 80px;       /* header logo height */
+    max-height: 80px;
+    width: auto;
+    display: block;
+    transition: var(--transition);
+    object-fit: contain;
+}
+
+/* ensure image inside header logo doesn't stretch */
+.logo img {
+    display: block;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Footer brand wrapper (keeps footer styles separate) */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Footer logo — independent but matched to header */
+.footer-logo {
+    height: 96px;       /* match header logo height */
+    max-height: 96px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* ensure image inside footer logo doesn't stretch */
+.footer-logo img {
+    display: block;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
 }
 
 .brand-text {
@@ -896,8 +942,9 @@ body {
     }
     
 .footer-logo {
-    height: 40px;
+    height: 256px; /* scale footer logo up to match header */
     width: auto;
+    padding-right: 60px;
 }
 
 .footer-brand p {
@@ -1028,6 +1075,23 @@ body {
     .timer-item {
         min-width: auto;
         width: 100%;
+    }
+    
+    /* scale header logo down on smaller screens */
+    .logo {
+        height: 64px;
+        max-height: 64px;
+    }
+
+    /* scale footer logo down independently to match header on small screens */
+    .footer-logo {
+        height: 64px;
+        max-height: 64px;
+    }
+
+    /* restore compact navbar height on mobile */
+    .nav-container {
+        padding: 10px 16px;
     }
 }
 
