@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![FACE Logo](FaceLogo.png)
+![FACE Logo](FaceLogo3.png)
 
 **Forum for Aspiring Computer Engineers**
 
